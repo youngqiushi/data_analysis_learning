@@ -1,0 +1,39 @@
+#用随机森林来填补缺失值
+x_missing_reg = x_missing.copy()
+
+#找出数据集中，缺失值从小到大排列的顺序,并且有了这些特征的索引,填补缺失值一定从小到大开始填补
+sort_index = np.argsort(x_missing_reg.isnull().sum(axis=0)).values
+sort_index
+
+for i in sort_index:
+    #构建新特征矩阵
+    df = x_missing_reg
+    
+    #新标签
+    fillc = df.iloc[:,i]
+    
+    #新特征矩阵
+    df = pd.concat([df.iloc[:,df.columns != i],pd.DataFrame(y_full)],axis=1)
+    
+    #在新的特征矩阵中对缺失值进行0的填补
+    df_0 = SimpleImputer(missing_values=np.nan,strategy='constant',fill_value=0).fit_transform(df)
+    
+    #找出训练集和测试集
+    #被我们选中要填充的特征中（现在是我们的标签），存在的那些值，非空值
+    Ytrain = fillc[fillc.notnull()]
+    
+    #被我们选中要填充的特征中（现在是我们的标签），不存在的那些值，是空值
+    #我们并不是需要Ytest的值，需要的是Ytest所带来的索引
+    Ytest = fillc[fillc.isnull()]
+    
+    #由Ytrain和Ytest，不难理解Xtrain和Xtest
+    Xtrain = df_0[Ytrain.index,:]
+    Xtest = df_0[Ytest.index,:]
+    
+    #用随机森林回归来填补缺失值
+    rfr = RandomForestRegressor(n_estimators=100)
+    rfr = rfr.fit(Xtrain,Ytrain)
+    Ypredict = rfr.predict(Xtest)
+    
+    #将填补好的特征返回到原始特征矩阵中
+    x_missing_reg.loc[x_missing_reg.iloc[:,i].isnull(),i] = Ypredict

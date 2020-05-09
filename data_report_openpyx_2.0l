@@ -1,0 +1,201 @@
+from openpyxl import load_workbook
+#所有文字内容都需要copy,只保留sheet1
+#各tab效果： all-A151打头即可，A151框内为“日期”  主-A161打头即可  分-A171打头即可
+#各类型搜索结果效果： J151打头即可，J151框内为 “日期”
+#今日热点：T151打头即可 T151框内为“日期”  更多热搜：T161打头即可 T161框内为“日期”
+#记住要先做一个本周数据为空的周报，然后才可以开始
+
+workbook = load_workbook(filename='0430～0507.xlsx')
+print(workbook.sheetnames)
+sheet = workbook.active
+
+#总搜索uv
+sheet['D8'] = '=SUM(B152:B159)/7' #all
+sheet['D9'] = '=SUM(B162:B169)/7' #主
+sheet['D10'] = '=SUM(B172:B179)/7' #分
+#总搜索pv
+sheet['E8'] = '=SUM(C152:C159)/7' #all
+sheet['E9'] = '=SUM(C162:C169)/7' #主
+sheet['E10'] = '=SUM(C172:C179)/7' #分
+#总点击pv
+sheet['F8'] = '=SUM(D152:D159)/7' #all
+sheet['F9'] = '=SUM(D162:D169)/7' #主
+sheet['F10'] = '=SUM(D172:D179)/7' #分
+#总曝光qv
+sheet['G8'] = '=SUM(E152:E159)/7' #all
+sheet['G9'] = '=SUM(E162:E169)/7' #主
+sheet['G10'] = '=SUM(E172:E179)/7' #分
+#人均点击pv
+sheet['H8'] = '=F8/D8'
+sheet['H9'] = '=F9/D9'
+sheet['H10'] = '=F10/D10'
+#CTR
+sheet['I8'] = '=F8/E8'
+sheet['I9'] = '=F9/E9'
+sheet['I10'] = '=F10/E10'
+#CTR1
+sheet['J8'] = '=F8/G8'
+sheet['J9'] = '=F9/G9'
+sheet['J10'] = '=F10/G10'
+#相对差值
+sheet['D14'] = '=D8/D11-1'
+sheet['D15'] = '=D9/D12-1'
+sheet['D16'] = '=D10/D13-1'
+sheet['E14'] = '=E8/E11-1'
+sheet['E15'] = '=E9/E12-1'
+sheet['E16'] = '=E10/E13-1'
+sheet['F14'] = '=F8/F11-1'
+sheet['F15'] = '=F9/F12-1'
+sheet['F16'] = '=F10/F13-1'
+sheet['G14'] = '=G8/G11-1'
+sheet['G15'] = '=G9/G12-1'
+sheet['G16'] = '=G10/G13-1'
+sheet['H14'] = '=H8/H11-1'
+sheet['H15'] = '=H9/H12-1'
+sheet['H16'] = '=H10/H13-1'
+sheet['I14'] = '=I8/I11-1'
+sheet['I15'] = '=I9/I12-1'
+sheet['I16'] = '=I10/I13-1'
+sheet['J14'] = '=J8/J11-1'
+sheet['J15'] = '=J9/J12-1'
+sheet['J16'] = '=J10/J13-1'
+#naitive模块点击pv
+sheet['D45'] = '=SUMIF(K152:K400,"普通文章",M152:M400)/7' #普通文章pv
+sheet['D47'] = '=D45/D46-1'
+sheet['E45'] = '=SUMIF(K152:K400,"首条大卡",M152:M400)/7' #首条大卡pv
+sheet['E47'] = '=E45/E46-1'
+sheet['F45'] = '=SUMIF(K152:K400,"相关搜索词hint",M152:M400)/7' #相关搜索词pv
+sheet['F47'] = '=F45/F46-1'
+sheet['G45'] = '=SUMIF(K152:K400,"微博",M152:M400)/7' #微博pv
+sheet['G47'] = '=G45/G46-1'
+sheet['H45'] = '=SUMIF(K152:K400,"百科",M152:M400)/7' #百科pv
+sheet['H47'] = '=H45/H46-1'
+sheet['I45'] = '=SUMIF(K152:K400,"视频",M152:M400)/7' #视频pv
+sheet['I47'] = '=I45/I46-1'
+sheet['J45'] = '=SUMIF(K152:K400,"猜你喜欢",M152:M400)/7' #猜你喜欢pv
+sheet['J47'] = '=J45/J46-1'
+sheet['K45'] = '=SUMIF(K152:K400,"话题",M152:M400)/7' #话题pv
+sheet['K47'] = '=K45/K46-1'
+sheet['L45'] = '=SUMIF(K152:K400,"单条企鹅号",M152:M400)/7' #单条企鹅号pv
+sheet['L47'] = '=L45/L46-1'
+sheet['M45'] = '=SUMIF(K152:K400,"小视频",M152:M400)/7' #小视频pv
+sheet['M47'] = '=M45/M46-1'
+sheet['N45'] = '=SUMIF(K152:K400,"专题",M152:M400)/7' #专题pv
+sheet['N47'] = '=N45/N46-1'
+sheet['O45'] = '=SUMIF(K152:K400,"热搜模块",M152:M400)/7' #热搜模块pv
+sheet['O47'] = '=O45/O46-1'
+sheet['P45'] = '=SUMIF(K152:K400,"多条企鹅号",M152:M400)/7' #多条企鹅号pv
+sheet['P47'] = '=P45/P46-1'
+sheet['Q45'] = '=SUMIF(K152:K400,"大家都在搜",M152:M400)/7' #大家都在搜pv
+sheet['Q47'] = '=Q45/Q46-1'
+#naitive模块CTR
+sheet['D48'] = '=SUMIF(K152:K400,"普通文章",R152:R400)/7' #普通文章ctr
+sheet['D50'] = '=D48/D49-1'
+sheet['E48'] = '=SUMIF(K152:K400,"首条大卡",P152:P400)/7' #首条大卡ctr
+sheet['E50'] = '=E48/E49-1'
+sheet['F48'] = '=SUMIF(K152:K400,"相关搜索词hint",R152:R400)/7' #相关搜索词ctr
+sheet['F50'] = '=F48/F49-1'
+sheet['G48'] = '=SUMIF(K152:K400,"微博",R152:R400)/7' #微博ctr
+sheet['G50'] = '=G48/G49-1'
+sheet['H48'] = '=SUMIF(K152:K400,"百科",R152:R400)/7' #百科ctr
+sheet['H50'] = '=H48/H49-1'
+sheet['I48'] = '=SUMIF(K152:K400,"视频",R152:R400)/7' #视频ctr
+sheet['I50'] = '=I48/I49-1'
+sheet['J48'] = '=SUMIF(K152:K400,"猜你喜欢",R152:R400)/7' #猜你喜欢ctr
+sheet['J50'] = '=J48/J49-1'
+sheet['K48'] = '=SUMIF(K152:K400,"话题",R152:R400)/7' #话题ctr
+sheet['K50'] = '=K48/K49-1'
+sheet['L48'] = '=SUMIF(K152:K400,"单条企鹅号",R152:R400)/7' #单条企鹅号ctr
+sheet['L50'] = '=L48/L49-1'
+sheet['M48'] = '=SUMIF(K152:K400,"小视频",R152:R400)/7' #小视频ctr
+sheet['M50'] = '=M48/M49-1'
+sheet['N48'] = '=SUMIF(K152:K400,"专题",R152:R400)/7' #专题ctr
+sheet['N50'] = '=N48/N49-1'
+sheet['O48'] = '=SUMIF(K152:K400,"热搜模块",P152:P400)/7' #热搜模块ctr
+sheet['O50'] = '=O48/O49-1'
+sheet['P48'] = '=SUMIF(K152:K400,"多条企鹅号",R152:R400)/7' #多条企鹅号ctr
+sheet['P50'] = '=P48/P49-1'
+sheet['Q48'] = '=SUMIF(K152:K400,"大家都在搜",P152:P400)/7' #大家都在搜ctr
+sheet['Q50'] = '=Q48/Q49-1'
+#h5模块点击pv
+sheet['D53'] = '=SUMIF(K152:K400,"阿拉丁-游戏联运",M152:M400)/7' #游戏联运pv
+sheet['D55'] = '=D53/D54-1'
+sheet['E53'] = '=SUMIF(K152:K400,"阿拉丁-长视频精准卡片",M152:M400)/7' #长视频精准卡片pv
+sheet['E55'] = '=E53/E54-1'
+sheet['F53'] = '=SUMIF(K152:K400,"阿拉丁-腾讯医典-疾病",M152:M400)/7' #腾讯医典-疾病pv
+sheet['F55'] = '=F53/F54-1'
+sheet['G53'] = '=SUMIF(K152:K400,"图片聚合",M152:M400)/7' #图片聚合pv
+sheet['G55'] = '=G53/G54-1'
+sheet['H53'] = '=SUMIF(K152:K400,"阿拉丁-汽车车系卡片",M152:M400)/7' #汽车车系卡片pv
+sheet['H55'] = '=H53/H54-1'
+sheet['I53'] = '=SUMIF(K152:K400,"阿拉丁-汽车品牌卡片",M152:M400)/7' #汽车品牌卡片pv
+sheet['I55'] = '=I53/I54-1'
+sheet['J53'] = '=SUMIF(K152:K400,"阿拉丁-天气",M152:M400)/7' #天气pv
+sheet['J55'] = '=J53/J54-1'
+sheet['K53'] = '=SUMIF(K152:K400,"阿拉丁-股票",M152:M400)/7' #股票pv
+sheet['K55'] = '=K53/K54-1'
+sheet['L53'] = '=SUMIF(K152:K400,"阿拉丁-原创",M152:M400)/7' #原创pv
+sheet['L55'] = '=L53/L54-1'
+sheet['M53'] = '=SUMIF(K152:K400,"阿拉丁-长视频泛卡片",M152:M400)/7' #长视频泛卡片pv
+sheet['M55'] = '=M53/M54-1'
+sheet['N53'] = '=SUMIF(K152:K400,"阿拉丁-官网",M152:M400)/7' #官网pv
+sheet['N55'] = '=N53/N54-1'
+sheet['O53'] = '=SUMIF(K152:K400,"阿拉丁-活动",M152:M400)/7' #活动pv
+sheet['O55'] = '=O53/O54-1'
+sheet['P53'] = '=SUMIF(K152:K400,"阿拉丁-景点",M152:M400)/7' #景点pv
+sheet['P55'] = '=P53/P54-1'
+sheet['Q53'] = '=SUMIF(K152:K400,"阿拉丁-较真",M152:M400)/7' #较真pv
+sheet['Q55'] = '=Q53/Q54-1'
+sheet['R53'] = '=SUMIF(K152:K400,"阿拉丁-列表",M152:M400)/7' #列表pv
+sheet['R55'] = '=R53/R54-1'
+sheet['S53'] = 'Nan'
+sheet['S55'] = 'Nan'
+#h5模块CTR
+sheet['D56'] = '=SUMIF(K152:K400,"阿拉丁-游戏联运",P152:P400)/7' #游戏联运ctr
+sheet['D58'] = '=D56/D57-1'
+sheet['E56'] = '=SUMIF(K152:K400,"阿拉丁-长视频精准卡片",P152:P400)/7' #长视频精准卡片ctr
+sheet['E58'] = '=E56/E57-1'
+sheet['F56'] = '=SUMIF(K152:K400,"阿拉丁-腾讯医典-疾病",P152:P400)/7' #腾讯医典-疾病ctr
+sheet['F58'] = '=F56/F57-1'
+sheet['G56'] = '=SUMIF(K152:K400,"图片聚合",P152:P400)/7' #图片聚合ctr
+sheet['G58'] = '=G56/G57-1'
+sheet['H56'] = '=SUMIF(K152:K400,"阿拉丁-汽车车系卡片",P152:P400)/7' #汽车车系卡片ctr
+sheet['H58'] = '=H56/H57-1'
+sheet['I56'] = '=SUMIF(K152:K400,"阿拉丁-汽车品牌卡片",P152:P400)/7' #汽车品牌卡片ctr
+sheet['I58'] = '=I56/I57-1'
+sheet['J56'] = '=SUMIF(K152:K400,"阿拉丁-天气",P152:P400)/7' #天气ctr
+sheet['J58'] = '=J56/J57-1'
+sheet['K56'] = '=SUMIF(K152:K400,"阿拉丁-股票",P152:P400)/7' #股票ctr
+sheet['K58'] = '=K56/K57-1'
+sheet['L56'] = '=SUMIF(K152:K400,"阿拉丁-原创",P152:P400)/7' #原创ctr
+sheet['L58'] = '=L56/L57-1'
+sheet['M56'] = '=SUMIF(K152:K400,"阿拉丁-长视频泛卡片",P152:P400)/7' #长视频泛卡片ctr
+sheet['M58'] = '=M56/M57-1'
+sheet['N56'] = '=SUMIF(K152:K400,"阿拉丁-官网",P152:P400)/7' #官网ctr
+sheet['N58'] = '=N56/N57-1'
+sheet['O56'] = '=SUMIF(K152:K400,"阿拉丁-活动",P152:P400)/7' #活动ctr
+sheet['O58'] = '=O56/O57-1'
+sheet['P56'] = '=SUMIF(K152:K400,"阿拉丁-景点",P152:P400)/7' #景点ctr
+sheet['P58'] = '=P56/P57-1'
+sheet['Q56'] = '=SUMIF(K152:K400,"阿拉丁-较真",P152:P400)/7' #较真ctr
+sheet['Q58'] = '=Q56/Q57-1'
+sheet['R56'] = '=SUMIF(K152:K400,"阿拉丁-列表",P152:P400)/7' #列表ctr
+sheet['R58'] = '=R56/R57-1'
+sheet['S56'] = 'Nan'
+sheet['S58'] = 'Nan'
+#热词点击效果
+sheet['C86'] = '=SUM(X152:X159)/7' #点击pv 今日热点
+sheet['C88'] = '=C86/C87-1'
+sheet['D86'] = '=SUM(V152:V159)/7' #曝光pv 今日热点
+sheet['D88'] = '=D86/D87-1'
+sheet['E86'] = '=SUM(Z152:Z159)/700' #CTR 今日热点
+sheet['E88'] = '=E86/E87-1'
+sheet['F86'] = '=SUM(X162:X169)/7' #点击pv 更多热搜
+sheet['F88'] = '=F86/F87-1'
+sheet['G86'] = '=SUM(V162:V169)/7' #曝光pv 更多热搜
+sheet['G88'] = '=G86/G87-1'
+sheet['H86'] = '=SUM(Z162:Z169)/700' #CTR 更多热搜
+sheet['H88'] = '=H86/H87-1'
+
+#保存
+workbook.save(filename='数据周报0430~0507.xlsx')

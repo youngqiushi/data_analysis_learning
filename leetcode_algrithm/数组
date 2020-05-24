@@ -1,0 +1,21 @@
+#从排序数组中删除重复项
+class solution():
+    def removeduplicates(self,nums):
+        n = len(set(nums))
+        i = 0
+        #元素一共有5个，0 1 2 3 4 ，若 0 1 2 3 都排干净了，那3后面一定是4，因此i从0到3即可
+        while i < n-1:
+            if nums[i] == nums[i+1]:
+                temp = nums[i+1]
+                nums[i+1:len(nums) - 1] = nums[i+2:]
+                nums[-1] = temp
+            else:
+                i += 1
+        return n,nums[0:n]
+
+nums = [0,0,1,1,1,2,2,3,3,4,]
+player = solution()
+print('去重数组为:%s'%list(player.removeduplicates(nums)[1]))
+print('去重数组长度为:%d'%(player.removeduplicates(nums)[0]))
+
+

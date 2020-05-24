@@ -1,0 +1,22 @@
+#冒泡排序
+import random
+
+def randomilist(n):
+    ilist = []
+    for i in range(n):
+        ilist.append(random.randrange(100))
+    return ilist
+
+def bubblesort(ilist):
+    n = len(ilist)
+    if n <= 1:
+        return ilist
+    for i in range(0,n):
+        for j in range(1,n-i):
+            if ilist[j] < ilist[j-1]:
+                ilist[j],ilist[j-1] = ilist[j-1],ilist[j]
+    return ilist
+
+ilist = randomilist(10)
+ilist = bubblesort(ilist)
+print(ilist)

@@ -1,0 +1,234 @@
+#顺序查找法
+import random
+
+def randomilist(n):
+    ilist = []
+    for i in range(n):
+        ilist.append(random.randrange(100))
+    return ilist
+
+def quicksort(ilist):
+    left = []
+    right = []
+    n = len(ilist)
+    if n <= 1:
+        return ilist
+    for i in range(1,n):
+        if ilist[0] > ilist[i]:
+            left.append(ilist[i])
+        else:
+            right.append(ilist[i])
+    return quicksort(left) + [ilist[0]] + quicksort(right)
+
+def sequentsearch(ilist,key):
+    n = len(ilist)
+    for i in range(n):
+        if ilist[i] == key:
+            return ilist.index(ilist[i])
+            break
+
+ilist = randomilist(10)
+ilist = quicksort(ilist)
+minindex = sequentsearch(ilist,max(ilist))
+print(minindex)
+
+
+#二分查找法
+import random
+
+def randomilist(n):
+    ilist = []
+    for i in range(n):
+        ilist.append(random.randrange(100))
+    return ilist
+
+def quicksort(ilist):
+    left = []
+    right = []
+    n = len(ilist)
+    if n <= 1:
+        return ilist
+    for i in range(1,n):
+        if ilist[0] > ilist[i]:
+            left.append(ilist[i])
+        else:
+            right.append(ilist[i])
+    return quicksort(left) + [ilist[0]] + quicksort(right)
+
+def binarysearch(ilist,key):
+    left = 0
+    right = len(ilist) - 1
+    mid = (left + right) // 2
+    while right - left > 1:
+        if key > ilist[mid]:
+            left = mid
+        elif key < ilist[mid]:
+            right = mid
+        else:
+            return mid
+        if key == ilist[left]:
+            return left
+        elif key == ilist[right]:
+            return right
+        else:
+            return -1
+
+ilist = randomilist(10)
+ilist = quicksort(ilist)
+maxindex = binarysearch(ilist,max(ilist))
+print(maxindex)
+
+
+#斐波那契查找
+import random
+
+def randomilist(n):
+    ilist = []
+    for i in range(n):
+        ilist.append(random.randrange(100))
+    return ilist
+
+def quicksort(ilist):
+    left = []
+    right = []
+    n = len(ilist)
+    if n <= 1:
+        return ilist
+    for i in range(1,n):
+        if ilist[0] > ilist[i]:
+            left.append(ilist[i])
+        else:
+            right.append(ilist[i])
+    return quicksort(left) + [ilist[0]] + quicksort(right)
+
+def fibonacci(n):
+    flist = [1,1]
+    while n > 1:
+        flist.append(flist[-1] + flist[-2])
+        n -= 1
+    return flist[-1]
+
+def finonaccisearch(ilist,key):
+    print('Find the number:%d'%key)
+    left = 0
+    right = len(ilist) - 1
+    k = 1
+    while fibonacci(k) < len(ilist):
+        k += 1
+    while right - left > 1:
+        mid = left + fibonacci(k-1)
+        if key < ilist[mid]:
+            right = mid - 1
+            k -= 1    #不管k如何变化，要尽可能保证把key包在里面
+        elif key > ilist[mid]:
+            left = mid + 1
+            k -= 2
+        else:
+            return mid
+        if key == ilist[left]:
+            return left
+        elif key ==ilist[right]:
+            return right
+        else:
+            return -1
+
+ilist = randomilist(10)
+ilist = quicksort(ilist)
+maxindex = finonaccisearch(ilist,max(ilist))
+print(maxindex)
+
+
+#插值查找，用比较科学的方法找参照点
+import random
+
+def randomilist(n):
+    ilist = []
+    for i in range(n):
+        ilist.append(random.randrange(100))
+    return ilist
+
+def quicksort(ilist):
+    left = []
+    right = []
+    n = len(ilist)
+    if n <= 1:
+        return ilist
+    for i in range(1,n):
+        if ilist[0] > ilist[i]:
+            left.append(ilist[i])
+        else:
+            right.append(ilist[i])
+    return quicksort(left) + [ilist[0]] + quicksort(right)
+
+def insertsearch(ilist,key):
+    print('Find the number:%d'%key)
+    n = len(ilist)
+    left = 0
+    right = n - 1
+    while right - left > 1:
+        mid = left + (key - ilist[left]) * (right - left) // (ilist[right] - ilist[left])
+        if mid == left:
+            mid += 1 #当ilist[right]和ilist[left]相差太大的时候，有可能导致mid一直都等于left，陷入死循环
+        if key < ilist[mid]:
+            right = mid
+        elif key > ilist[mid]:
+            left = mid
+        else:
+            return mid
+        if key == ilist[left]:
+            return left
+        elif key == ilist[right]:
+            return right
+        else:
+            return -1
+
+ilist = randomilist(10)
+ilist = quicksort(ilist)
+maxindex = insertsearch(ilist,max(ilist))
+print(maxindex)
+
+
+#分块查找 块必须是有序的，块中的元素可以是无序的
+import random
+
+def randomilist(n):
+    ilist = []
+    for i in range(n):
+        ilist.append(random.randrange(100))
+    return ilist
+
+ilist = randomilist(10)
+indexlist = [[25,0],[50,0],[75,0],[100,0]]
+
+def divideblock():
+    global ilist,indexlist
+    sortlist = []
+    for key in indexlist:
+        sublist = [i for i in ilist if i < key[0]]
+        key[1] = len(sublist)
+        sortlist += sublist
+        ilist = list(set(ilist) - set(sublist))
+    ilist = sortlist
+    print()
+    return indexlist
+
+def blocksearch(ilist,key,indexlist):
+    print('ilist = %s'%str(ilist))
+    print('indexlist = %s'%str(indexlist))
+    print('Find the number:%d'%key)
+    left = 0 #搜索数列的索引起始点
+    right = 0 #搜索数列的索引终止点
+    for indexinfo in indexlist:
+        left += right
+        right = indexinfo[1]
+        if key < indexinfo[0]:
+            break  #一旦确定了key在哪个块里，就说明left和right生效，直接跳出即可
+    for i in range(left,right):
+        if key == ilist[i]:
+            return i
+    return -1
+
+divideblock()
+key = min(ilist)
+minindex = blocksearch(ilist,key,indexlist)
+print(minindex)

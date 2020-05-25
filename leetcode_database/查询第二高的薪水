@@ -19,7 +19,7 @@
 链接：https://leetcode-cn.com/problems/second-highest-salary
 
 1、用limit。distinct 和 order 缺一不可
-select (select distinct Salary from Employee order by Salary limit 1 offset 1) as SecondHighestSalary
+select (select distinct Salary from Employee order by Salary desc limit 1 offset 1) as SecondHighestSalary
 
 2、选出除了最大薪水以外的最大薪水
 select max(Salary) as SecondHighestSalary
